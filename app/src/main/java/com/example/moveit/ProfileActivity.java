@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -69,5 +71,34 @@ public class ProfileActivity extends AppCompatActivity {
 
             }
         });
+
+        //Bottom bar intiliazing variables
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+        //Set home selected
+        bottomNavigationView.setSelectedItemId(R.id.home);
+
+        //Perform ItemSelectedListener
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.training:
+                        startActivity(new Intent(getApplicationContext(), Training.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+
+                    case R.id.home:
+                        return true;
+
+                    case R.id.stats:
+                        startActivity(new Intent(getApplicationContext(), Statistics.class));
+                        overridePendingTransition(0, 0);
+                        return true;
+                }
+                return false;
+            }
+        });
+
     }
 }

@@ -64,7 +64,6 @@ public class RegisterUser extends AppCompatActivity implements View.OnClickListe
                 registerUser();
                 break;
         }
-
     }
 
     @SuppressLint("SetTextI18n")
