@@ -19,6 +19,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private TextView register, forgotPassword;
@@ -101,15 +102,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if(task.isSuccessful()) {
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-//                    user.isEmailVerified()
-                    if(true) {
+
+                    if(user.isEmailVerified()) {
                         //redirect to profile user
                         startActivity(new Intent(MainActivity.this , ProfileActivity.class));
                     }
-//                    else {
-//                        user.sendEmailVerification();
-//                        Toast.makeText(MainActivity.this, "Check your email to verify account!", Toast.LENGTH_LONG).show();
-//                    }
+                    else {
+                        user.sendEmailVerification();
+                        Toast.makeText(MainActivity.this, "Check your email to verify account!", Toast.LENGTH_LONG).show();
+                    }
 
                 } else {
                     Toast.makeText(MainActivity.this,"Failed to login! Try again.", Toast.LENGTH_LONG).show();

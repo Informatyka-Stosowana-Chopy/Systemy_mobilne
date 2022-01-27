@@ -5,14 +5,18 @@
       <map>
         <entry key="..\:/Users/wmajc/AndroidStudioProjects/MoveIT/app/src/main/res/drawable/box.xml" value="0.2703125" />
         <entry key="..\:/Users/wmajc/AndroidStudioProjects/MoveIT/app/src/main/res/drawable/button.xml" value="0.2703125" />
+        <entry key="..\:/Users/wmajc/AndroidStudioProjects/MoveIT/app/src/main/res/drawable/ic_stats.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/wmajc/AndroidStudioProjects/MoveIT/app/src/main/res/drawable/ic_training.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/wmajc/AndroidStudioProjects/MoveIT/app/src/main/res/drawable/selector.xml" value="0.196875" />
+        <entry key="..\:/Users/wmajc/AndroidStudioProjects/MoveIT/app/src/main/res/layout/activity_breakfast.xml" value="0.264" />
+        <entry key="..\:/Users/wmajc/AndroidStudioProjects/MoveIT/app/src/main/res/layout/activity_dinner.xml" value="0.25" />
         <entry key="..\:/Users/wmajc/AndroidStudioProjects/MoveIT/app/src/main/res/layout/activity_forgot_password.xml" value="0.23596014492753623" />
+        <entry key="..\:/Users/wmajc/AndroidStudioProjects/MoveIT/app/src/main/res/layout/activity_lunch.xml" value="0.25" />
         <entry key="..\:/Users/wmajc/AndroidStudioProjects/MoveIT/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/wmajc/AndroidStudioProjects/MoveIT/app/src/main/res/layout/activity_main2.xml" value="0.18072916666666666" />
-        <entry key="..\:/Users/wmajc/AndroidStudioProjects/MoveIT/app/src/main/res/layout/activity_profile.xml" value="0.19791666666666666" />
+        <entry key="..\:/Users/wmajc/AndroidStudioProjects/MoveIT/app/src/main/res/layout/activity_profile.xml" value="0.264" />
         <entry key="..\:/Users/wmajc/AndroidStudioProjects/MoveIT/app/src/main/res/layout/activity_register_user.xml" value="0.264" />
-        <entry key="..\:/Users/wmajc/AndroidStudioProjects/MoveIT/app/src/main/res/layout/activity_statistics.xml" value="0.18072916666666666" />
+        <entry key="..\:/Users/wmajc/AndroidStudioProjects/MoveIT/app/src/main/res/layout/activity_statistics.xml" value="0.264" />
         <entry key="..\:/Users/wmajc/AndroidStudioProjects/MoveIT/app/src/main/res/layout/activity_training.xml" value="0.18072916666666666" />
         <entry key="..\:/Users/wmajc/AndroidStudioProjects/MoveIT/app/src/main/res/menu/menu_navigation.xml" value="0.18072916666666666" />
       </map>

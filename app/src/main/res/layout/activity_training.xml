@@ -17,21 +17,24 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/menu_navigation" />
 
+
     <com.mikhaellopez.circularprogressbar.CircularProgressBar
         android:id="@+id/circularProgressBar"
         android:layout_width="280dp"
         android:layout_height="280dp"
-        android:layout_centerInParent="true"
         app:cpb_background_progressbar_color="#b6bbd8"
         app:cpb_background_progressbar_width="5dp"
         app:cpb_progress_direction="to_right"
-        app:cpb_progressbar_color="#FF9800"
+        app:cpb_progressbar_color="#3f51b5"
         app:cpb_progressbar_width="20dp"
+        app:cpb_progress_max="10000"
         app:cpb_round_border="true"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.491" />
 
     <TextView
         android:id="@+id/stepsTaken"
@@ -52,7 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/stepsTaken"
         android:layout_centerInParent="true"
-        android:text="/2500"
+        android:text="10000"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"

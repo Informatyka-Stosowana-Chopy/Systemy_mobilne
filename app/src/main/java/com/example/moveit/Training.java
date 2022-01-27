@@ -1,24 +1,32 @@
 package com.example.moveit;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inspector.StaticInspectionCompanionProvider;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
+
 
 public class Training extends AppCompatActivity implements SensorEventListener {
 
@@ -26,21 +34,24 @@ public class Training extends AppCompatActivity implements SensorEventListener {
     boolean running = false;
     float totalSteps = 0f;
     float previousTotalSteps = 0f;
-    TextView stepsTaken;
+    TextView tv_stepsTaken;
 
-
-
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_DENIED){
+            //ask for permission
+            requestPermissions(new String[]{Manifest.permission.ACTIVITY_RECOGNITION}, 0);
+        }
+
         setContentView(R.layout.activity_training);
 
-
-        stepsTaken = findViewById(R.id.stepsTaken);
+        tv_stepsTaken = findViewById(R.id.stepsTaken);
         loadData();
         resetSteps();
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-
 
 
         //Bottom bar intiliazing variables
@@ -79,38 +90,33 @@ public class Training extends AppCompatActivity implements SensorEventListener {
         running = true;
         Sensor stepSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
 
-        if(stepSensor == null){
+        if (stepSensor == null) {
             Toast.makeText(this, "No step sensor detected", Toast.LENGTH_SHORT).show();
-        }else{
-            sensorManager.registerListener(this, stepSensor, sensorManager.SENSOR_DELAY_UI);
+        } else {
+            sensorManager.registerListener(this, stepSensor, SensorManager.SENSOR_DELAY_UI);
         }
     }
 
-    private void resetSteps() {
-        stepsTaken.setOnClickListener(new View.OnClickListener() {
+    public void resetSteps() {
+        tv_stepsTaken.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), "Long click to reset steps", Toast.LENGTH_LONG).show();
             }
         });
 
-        stepsTaken.setOnLongClickListener(new View.OnLongClickListener() {
+        tv_stepsTaken.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
                 previousTotalSteps = totalSteps;
-                stepsTaken.setText("0");
+                tv_stepsTaken.setText("0");
+                CircularProgressBar progress_circular = findViewById(R.id.circularProgressBar);
+                progress_circular.setProgressWithAnimation(0f);
                 saveData();
                 return true;
             }
         });
-    }
 
-
-    private void loadData() {
-        SharedPreferences sharedPreferences = getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
-        float savedNumber = sharedPreferences.getFloat("key1", 0f);
-        Log.d("Training", String.valueOf(savedNumber));
-        previousTotalSteps = savedNumber;
     }
 
     private void saveData() {
@@ -120,17 +126,24 @@ public class Training extends AppCompatActivity implements SensorEventListener {
         editor.apply();
     }
 
+    private void loadData() {
+        SharedPreferences sharedPreferences = getSharedPreferences("myPrefs", Context.MODE_PRIVATE);
+        float savedNumber = sharedPreferences.getFloat("key1", 0f);
+        Log.d("Training", String.valueOf(savedNumber));
+        previousTotalSteps = savedNumber;
+
+    }
+
     @Override
     public void onSensorChanged(SensorEvent event) {
         if (running) {
             totalSteps = event.values[0];
             int currentSteps = (int) (totalSteps - previousTotalSteps);
 
-            stepsTaken.setText(String.valueOf(currentSteps));
+            tv_stepsTaken.setText(String.valueOf(currentSteps));
 
-            //TODO progress_circular
             CircularProgressBar progress_circular = findViewById(R.id.circularProgressBar);
-            progress_circular.setProgressWithAnimation((float)currentSteps);
+            progress_circular.setProgressWithAnimation((float) currentSteps);
         }
     }
 
@@ -138,4 +151,5 @@ public class Training extends AppCompatActivity implements SensorEventListener {
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
+
 }

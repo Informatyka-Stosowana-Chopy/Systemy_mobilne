@@ -6,15 +6,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class Statistics extends AppCompatActivity {
 
+    Training training = new Training();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
+
+        TextView steps = (TextView) findViewById(R.id.steps);
+
+        steps.setText(Double.toString(training.totalSteps));
+
 
         //Bottom bar intiliazing variables
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
