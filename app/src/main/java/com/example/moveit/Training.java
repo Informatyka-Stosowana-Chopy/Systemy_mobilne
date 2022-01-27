@@ -32,9 +32,14 @@ public class Training extends AppCompatActivity implements SensorEventListener {
 
     SensorManager sensorManager = null;
     boolean running = false;
-    float totalSteps = 0f;
+    float TotalSteps = 0f;
     float previousTotalSteps = 0f;
     TextView tv_stepsTaken;
+
+    TextView target;
+    int numOfSteps;
+
+    Statistics stats = new Statistics();
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
@@ -47,6 +52,8 @@ public class Training extends AppCompatActivity implements SensorEventListener {
         }
 
         setContentView(R.layout.activity_training);
+
+        target = findViewById(R.id.totalSteps);
 
         tv_stepsTaken = findViewById(R.id.stepsTaken);
         loadData();
@@ -108,15 +115,25 @@ public class Training extends AppCompatActivity implements SensorEventListener {
         tv_stepsTaken.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                previousTotalSteps = totalSteps;
+                previousTotalSteps = TotalSteps;
                 tv_stepsTaken.setText("0");
                 CircularProgressBar progress_circular = findViewById(R.id.circularProgressBar);
                 progress_circular.setProgressWithAnimation(0f);
+
+                Toast.makeText(getApplicationContext(), "Steps reset!", Toast.LENGTH_LONG).show();
+                target.setText("10000");
+
                 saveData();
                 return true;
             }
         });
+    }
 
+    public void reset() {
+        tv_stepsTaken.setText("0");
+        CircularProgressBar progress_circular = findViewById(R.id.circularProgressBar);
+        progress_circular.setProgressWithAnimation(0f);
+        saveData();
     }
 
     private void saveData() {
@@ -131,20 +148,35 @@ public class Training extends AppCompatActivity implements SensorEventListener {
         float savedNumber = sharedPreferences.getFloat("key1", 0f);
         Log.d("Training", String.valueOf(savedNumber));
         previousTotalSteps = savedNumber;
-
     }
+
 
     @Override
     public void onSensorChanged(SensorEvent event) {
         if (running) {
-            totalSteps = event.values[0];
-            int currentSteps = (int) (totalSteps - previousTotalSteps);
+            numOfSteps = Integer.parseInt(target.getText().toString());
+
+            TotalSteps = event.values[0];
+            int currentSteps = (int) (TotalSteps - previousTotalSteps);
+
+            if(currentSteps == numOfSteps) {
+                Toast.makeText(getApplicationContext(), "Daily goal achieved!", Toast.LENGTH_LONG).show();
+                target.setText(numOfSteps+=1000);
+
+                int stepsStat = Integer.parseInt(stats.steps.getText().toString());
+                int result = numOfSteps += stepsStat;
+
+                stats.steps.setText(result);
+
+                reset();
+            }
 
             tv_stepsTaken.setText(String.valueOf(currentSteps));
 
             CircularProgressBar progress_circular = findViewById(R.id.circularProgressBar);
             progress_circular.setProgressWithAnimation((float) currentSteps);
         }
+
     }
 
     @Override
